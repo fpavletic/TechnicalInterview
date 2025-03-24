@@ -1,5 +1,6 @@
 ﻿using ReleaseBox.Core.Data.Interface;
 using ReleaseBox.Core.Services;
+using ReleaseBox.Data.Sqlite;
 using ReleaseBox.Data.Sqlite.ConnectionDataProvider;
 using ReleaseBox.Data.Sqlite.Repositories;
 
@@ -15,7 +16,9 @@ public class FileServiceTestsFixture : IDisposable
 
     public FileServiceTestsFixture()
     {
-        var connectionDataProvider = new ConstantOnDiskConnectionDataProvider("C:/ProgramData/ReleaseBox/");
+        var connectionDataProvider = new ConstantOnDiskConnectionDataProvider("./");
+        using var databaseInitializer = new DatabaseInitializer(connectionDataProvider);
+        databaseInitializer.Initialize();
         FileRepository = new FileRepository(connectionDataProvider);
         DirectoryRepository = new DirectoryRepository(connectionDataProvider);
         FileSystemEntryRepository = new FileSystemEntryRepository(connectionDataProvider);

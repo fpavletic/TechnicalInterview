@@ -54,7 +54,7 @@ public class DatabaseInitializer : IDisposable
                                                     {Directory.ParentDirectoryId} INTEGER,
                                                     {Directory.Name} TEXT NOT NULL CHECK(TRIM({Directory.Name}) <> ''),
                                                     UNIQUE({Directory.ParentDirectoryId}, {Directory.Name}),
-                                                    FOREIGN KEY ({Directory.ParentDirectoryId}) REFERENCES {Directory.TableName}({Directory.Id})
+                                                    FOREIGN KEY ({Directory.ParentDirectoryId}) REFERENCES {Directory.TableName}({Directory.Id}) ON DELETE CASCADE
                                                   );                                                 
                                                   CREATE INDEX IF NOT EXISTS {Directory.TableName}_{Directory.ParentDirectoryId}_index ON {Directory.TableName}({Directory.ParentDirectoryId})
                                                   """;
@@ -65,7 +65,7 @@ public class DatabaseInitializer : IDisposable
                                                 {File.ParentDirectoryId} INTEGER,
                                                 {File.Name} TEXT NOT NULL CHECK(TRIM({File.Name}) <> ''),
                                                 UNIQUE({File.ParentDirectoryId}, {File.Name}),
-                                                FOREIGN KEY ({File.ParentDirectoryId}) REFERENCES {Directory.TableName}({Directory.Id})
+                                                FOREIGN KEY ({File.ParentDirectoryId}) REFERENCES {Directory.TableName}({Directory.Id}) ON DELETE CASCADE
                                             );
                                             CREATE INDEX IF NOT EXISTS {File.TableName}_{File.ParentDirectoryId}_index ON {File.TableName}({File.ParentDirectoryId})
                                             """;

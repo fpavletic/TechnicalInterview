@@ -74,7 +74,7 @@ public class DirectoryRepository : IDirectoryRepository, IDisposable
         try
         {
             transaction = (SQLiteTransaction)await _connection.Value.BeginTransactionAsync();
-            await using var command = new DeleteById(transaction, Directory.TableName, Directory.Id);
+            await using var command = new DeleteById(transaction, Directory.TableName, Directory.Id, Directory.ParentDirectoryId);
             var rowsAffected = await command.Execute(directoryId);
 
             if (rowsAffected == 1)
@@ -87,7 +87,7 @@ public class DirectoryRepository : IDirectoryRepository, IDisposable
 
             return rowsAffected == 0
                 ? new Error<DeleteErrorCodes>(DeleteErrorCodes.EntityNotFound, $"Attempted to delete a non-existent directory. Directory id: '{directoryId}'")
-                : new Error<DeleteErrorCodes>(DeleteErrorCodes.MultipleMatches,
+                : new Error<DeleteErrorCodes>(DeleteErrorCodes.UnknownError,
                     "Multiple entities match the provided id?"); //Should never happen   
         }
         catch (Exception e)

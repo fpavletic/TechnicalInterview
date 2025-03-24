@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 //Setup logger
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
-    .WriteTo.File($"{Constants.FileStorageDirectory}/ReleaseBox.log", rollingInterval: RollingInterval.Day)
+    .WriteTo.File(Path.Combine(Constants.FileStorageDirectory, "ReleaseBox.log"), rollingInterval: RollingInterval.Day)
     .CreateLogger();
 builder.Host.UseSerilog();
 

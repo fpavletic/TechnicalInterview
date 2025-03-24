@@ -46,7 +46,6 @@ public static class ActionResult
             error.Code switch
             {
                 DeleteErrorCodes.EntityNotFound => controller.NotFound(error),
-                DeleteErrorCodes.MultipleMatches => controller.Conflict(error),
                 DeleteErrorCodes.UnknownError => controller.UnprocessableEntity(error),
                 _ => throw new Exception($"Unknown error code: {error.Code}. Dumping error: {error}")
             };

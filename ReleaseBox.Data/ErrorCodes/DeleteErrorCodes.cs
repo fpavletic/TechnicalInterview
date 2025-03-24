@@ -3,6 +3,5 @@
 public enum DeleteErrorCodes
 {
     EntityNotFound,
-    MultipleMatches,
     UnknownError
 }

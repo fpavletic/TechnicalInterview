@@ -89,7 +89,7 @@ public class FileRepository : IFileRepository, IDisposable
         try
         {
             transaction = (SQLiteTransaction)await _connection.Value.BeginTransactionAsync();
-            await using var command = new DeleteById(transaction, File.TableName, File.Id);
+            await using var command = new DeleteById(transaction, File.TableName, File.Id, File.ParentDirectoryId);
             var rowsAffected = await command.Execute(fileId);
 
             if (rowsAffected == 1)
@@ -102,7 +102,7 @@ public class FileRepository : IFileRepository, IDisposable
 
             return rowsAffected == 0
                 ? new Error<DeleteErrorCodes>(DeleteErrorCodes.EntityNotFound, $"Attempted to delete a non-existent file. File id: '{fileId}'")
-                : new Error<DeleteErrorCodes>(DeleteErrorCodes.MultipleMatches,
+                : new Error<DeleteErrorCodes>(DeleteErrorCodes.UnknownError,
                     "Multiple entities match the provided id?"); //Should never happen   
         }
         catch (Exception e)

@@ -2,6 +2,6 @@
 
 public static class Constants
 {
-    public const string FileStorageDirectory = @"C:/ProgramData/ReleaseBox/";
+    public const string FileStorageDirectory = @"./";
     
 }
