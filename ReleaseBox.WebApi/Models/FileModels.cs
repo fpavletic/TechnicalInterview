@@ -9,7 +9,7 @@ public readonly record struct CreateFileParametersDto
     public required string FileName { get; init; }
 }
 
-public readonly record struct FileSearchParametersDto()
+public record FileSearchParametersDto()
 {
     public long RootDirectoryId { get; init; } = 1;
 
